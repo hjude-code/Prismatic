@@ -7,7 +7,7 @@ let values = {
   gap:0,
   posX:0,
   posY:0,
-  size:150
+  size:window.innerWidth/2
 }
 
 function preload(){
@@ -45,7 +45,15 @@ function draw() {
   background(150)
   
   prism.positionCellGraphic(values.offset)
-  prism.drawCell(values.posX, values.posY, values.size)
+  prism.drawCell({
+    position:{
+        x:values.posX,
+        y:values.posY
+    },
+    size:{
+        w:values.size
+    }
+})
   
   values.offset += 0.1 * values.speed
   

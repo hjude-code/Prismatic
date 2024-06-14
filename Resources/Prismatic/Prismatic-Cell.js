@@ -1,9 +1,7 @@
 class cell{
     constructor({
       image,
-      gapPercent = 0.1,
-      size = [100],
-      position=[100,100]
+      gapPercent = 0
     } = {}){
       this.image = image
       this.gapPercent = gapPercent
@@ -12,6 +10,7 @@ class cell{
       this.aspectRatio
       this.graphic
       this.cell
+      this.size = {}
     }
     
     createGraphic(){
@@ -35,9 +34,7 @@ class cell{
       this.graphic.clear()
       this.graphic.image(this.image, 0, 0)
       this.graphic.image(this.image, 0, this.graphicRowHeight)
-    }
-    
-    
+    }    
   
     createCell(){
       this.cell = createGraphics(this.image.width, this.image.height)
@@ -45,6 +42,10 @@ class cell{
 
       this.aspectRatio = this.image.height/this.image.width
       console.log(this.aspectRatio)
+
+      this.setSize(this.image.width, this.image.height)
+
+      
     }
     
     positionCellGraphic(offset = 0.5){
@@ -63,24 +64,27 @@ class cell{
       this.cell.clear()
       this.cell.image(this.graphic, 0, graphicX);
     }
-    
-    drawCell(x=0, y=0, size=100){
 
-      let w
-      let h
-
-      if(typeof size == "number"){
-        w = size
-        h = w*this.aspectRatio
-      }else if(size.length == 1){
-        w = size[0]
-        h = w*this.aspectRatio
-      }else if(size.length == 2){
-        w = size[0]
-        h = size[1]
+    setSize(width, height){
+      
+      if(width && height){
+        this.size.w = width
+        this.size.h = height
       }
 
-      image(this.cell, x, y, w, h)
+      if(width && !height){
+        this.size.w = width
+        this.size.h = this.size.w*this.aspectRatio
+      }
+    }
+    
+    drawCell({
+      position={x:0, y:0}, size={w:10}
+    }){
+
+      this.setSize(size.w, size.h)
+
+      image(this.cell, position.x, position.y, this.size.w, this.size.h)
     }
   }
   
