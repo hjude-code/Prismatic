@@ -44,7 +44,6 @@ class cell{
       this.cell.image(this.graphic, 0, 0)
 
       this.aspectRatio = this.image.height/this.image.width
-      console.log(this.aspectRatio)
 
       this.setSize(this.image.width, this.image.height)
       this.setClipMask()
@@ -118,8 +117,6 @@ class cell{
         this.clipMask.floor.x1 = this.image.width
         this.clipMask.floor.x2 = 0
       }
-
-      console.log(this.clipMask.ceiling)
     }  
     applyClipMask() {
 
@@ -145,8 +142,8 @@ class cell{
     }
 
     drawCell({
-      position={x:0, y:0}, size, clip, offset
-    }){
+      position={x:0, y:0}, size, clip, offset, gap
+    } = {}){
 
       if(size){
         this.setSize(size.w, size.h)
@@ -156,8 +153,11 @@ class cell{
         this.setClipMask(clip.top, clip.bottom)
       }
 
-      this.positionCellGraphic(offset)
+      if(gap){
+        this.updateGraphic(gap)
+      }
 
+      this.positionCellGraphic(offset)
 
       image(this.cell, position.x, position.y, this.size.w, this.size.h)
     }
