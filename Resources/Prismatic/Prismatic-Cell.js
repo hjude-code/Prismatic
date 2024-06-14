@@ -79,10 +79,13 @@ class cell{
     }
     
     drawCell({
-      position={x:0, y:0}, size={w:10}
+      position={x:0, y:0}, size
     }){
 
-      this.setSize(size.w, size.h)
+      if(size){
+        this.setSize(size.w, size.h)
+      }
+
 
       image(this.cell, position.x, position.y, this.size.w, this.size.h)
     }
