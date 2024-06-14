@@ -4,7 +4,9 @@ let randomImage
 let values = {
   offset:0.5,
   speed:0,
-  gap:0
+  gap:0,
+  posX:0,
+  posY:0
 }
 
 function preload(){
@@ -22,6 +24,8 @@ function setup() {
   let cellControls = gui.addFolder("Cell")
   cellControls.add(values, "offset", -1, 1)
   cellControls.add(values, "speed", -1, 1)
+  cellControls.add(values, "posX", 0, windowWidth)
+  cellControls.add(values, "posY", 0, windowHeight)
   cellControls.add(values, "gap", 0, 1).onChange(()=>{prism.updateGraphic(values.gap)})
  
   prism.createGraphic()
@@ -41,7 +45,7 @@ function draw() {
 
   
   prism.positionCellGraphic(values.offset)
-  prism.drawCell()
+  prism.drawCell(values.posX, values.posY)
   
   values.offset += 0.1 * values.speed
   

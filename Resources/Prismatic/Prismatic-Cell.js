@@ -10,14 +10,12 @@ class cell{
       this.gap
       this.GraphicRowHeight
       this.size = size
-      this.position = position
       this.graphic
       this.cell
     }
     
     createGraphic(){
       this.graphic = createGraphics(0,0)
-      
       this.graphic.resizeCanvas(this.image.width, this.image.height*2)
       
       this.setGap(this.gapPercent)
@@ -63,8 +61,8 @@ class cell{
       this.cell.image(this.graphic, 0, graphicX);
     }
     
-    drawCell(){
-      image(this.cell, 100, 100)
+    drawCell(x=0, y=0){
+      image(this.cell, x, y)
     }
   }
   
