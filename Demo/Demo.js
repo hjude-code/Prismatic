@@ -6,7 +6,8 @@ let values = {
   speed:0,
   gap:0,
   posX:0,
-  posY:0
+  posY:0,
+  size:150
 }
 
 function preload(){
@@ -26,6 +27,7 @@ function setup() {
   cellControls.add(values, "speed", -1, 1)
   cellControls.add(values, "posX", 0, windowWidth)
   cellControls.add(values, "posY", 0, windowHeight)
+  cellControls.add(values, "size", 10, windowWidth)
   cellControls.add(values, "gap", 0, 1).onChange(()=>{prism.updateGraphic(values.gap)})
  
   prism.createGraphic()
@@ -42,10 +44,8 @@ function windowResized() {
 function draw() {
   background(150)
   
-
-  
   prism.positionCellGraphic(values.offset)
-  prism.drawCell(values.posX, values.posY)
+  prism.drawCell(values.posX, values.posY, values.size)
   
   values.offset += 0.1 * values.speed
   
@@ -53,5 +53,4 @@ function draw() {
     values.offset = 0
   }
 
-  
 }
