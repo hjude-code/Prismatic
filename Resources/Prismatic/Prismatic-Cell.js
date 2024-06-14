@@ -11,6 +11,9 @@ class cell{
       this.graphic
       this.cell
       this.size = {}
+      this.clipMask
+      this.angleTop = 0
+      this.angleBottom = 0
     }
     
     createGraphic(){
@@ -44,7 +47,7 @@ class cell{
       console.log(this.aspectRatio)
 
       this.setSize(this.image.width, this.image.height)
-
+      this.setClipMask()
       
     }
     
@@ -63,6 +66,7 @@ class cell{
       
       this.cell.clear()
       this.cell.image(this.graphic, 0, graphicX);
+      this.applyClipMask()
     }
 
     setSize(width, height){
@@ -77,9 +81,73 @@ class cell{
         this.size.h = this.size.w*this.aspectRatio
       }
     }
+
+    calculatePeakLength(angle){
+      let b = this.image.width
+      let radians = angle * Math.PI / 180
+      let sinA = Math.sin(radians)
+      return b * sinA
+    }
+
+    setClipMask(angleTop, angleBottom){
+      this.angleTop = angleTop
+      this.angleBottom = angleBottom
+
+      this.clipMask = {
+        ceiling:{
+          yMin:0,
+          yMax:this.calculatePeakLength(Math.abs(this.angleTop))
+        },
+        floor:{
+          yMin:this.image.height,
+          yMax:this.image.height - this.calculatePeakLength(Math.abs(this.angleBottom)),
+        }
+      }
+
+      if(this.angleTop < 0){
+        this.clipMask.ceiling.x1 = 0
+        this.clipMask.ceiling.x2 = this.image.width
+      }else{
+        this.clipMask.ceiling.x1 = this.image.width
+        this.clipMask.ceiling.x2 = 0
+      }
+      if(this.angleBottom > 0){
+        this.clipMask.floor.x1 = 0
+        this.clipMask.floor.x2 = this.image.width
+      }else{
+        this.clipMask.floor.x1 = this.image.width
+        this.clipMask.floor.x2 = 0
+      }
+
+      console.log(this.clipMask.ceiling)
+    }  
+    applyClipMask() {
+
+
+        this.cell.erase()
+
+          //clip ceiling
+          this.cell.beginShape()
+            this.cell.vertex(this.clipMask.ceiling.x1, this.clipMask.ceiling.yMin)
+            this.cell.vertex(this.clipMask.ceiling.x2, this.clipMask.ceiling.yMin)
+            this.cell.vertex(this.clipMask.ceiling.x2, this.clipMask.ceiling.yMax)
+          this.cell.endShape(CLOSE)
+
+
+        //clip floor
+          this.cell.beginShape()
+            this.cell.vertex(this.clipMask.floor.x1, this.clipMask.floor.yMin)
+            this.cell.vertex(this.clipMask.floor.x2, this.clipMask.floor.yMin)
+            this.cell.vertex(this.clipMask.floor.x2, this.clipMask.floor.yMax)
+          this.cell.endShape(CLOSE)
+        this.cell.noErase()
+
+    }
+
+
     
     drawCell({
-      position={x:0, y:0}, size
+      position={x:0, y:0}, size, clip
     }){
 
       if(size){
