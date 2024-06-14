@@ -144,15 +144,19 @@ class cell{
 
     }
 
-
-    
     drawCell({
-      position={x:0, y:0}, size, clip
+      position={x:0, y:0}, size, clip, offset
     }){
 
       if(size){
         this.setSize(size.w, size.h)
       }
+
+      if(clip){
+        this.setClipMask(clip.top, clip.bottom)
+      }
+
+      this.positionCellGraphic(offset)
 
 
       image(this.cell, position.x, position.y, this.size.w, this.size.h)

@@ -31,13 +31,8 @@ function setup() {
   cellControls.add(values, "posY", 0, windowHeight)
   cellControls.add(values, "size", 10, windowWidth)
   cellControls.add(values, "gap", 0, 1).onChange(()=>{prism.updateGraphic(values.gap)})
-  cellControls.add(values, "angleTop", -45, 45).onChange(()=>{prism.updateGraphic(values.gap)}).onChange(()=>{
-    prism.setClipMask(values.angleTop, values.angleBottom)
-  })
-  cellControls.add(values, "angleBottom", -45, 45).onChange(()=>{prism.updateGraphic(values.gap)}).onChange(()=>{
-    prism.setClipMask(values.angleTop, values.angleBottom)
-  })
- 
+  cellControls.add(values, "angleTop", -45, 45).onChange(()=>{prism.updateGraphic(values.gap)})
+  cellControls.add(values, "angleBottom", -45, 45).onChange(()=>{prism.updateGraphic(values.gap)})
   prism.createGraphic()
   prism.createCell()
   prism.positionCellGraphic(0.5)
@@ -52,7 +47,7 @@ function windowResized() {
 function draw() {
   clear()
   
-  prism.positionCellGraphic(values.offset)
+//   prism.positionCellGraphic(values.offset)
   prism.drawCell({
         position:{
             x:values.posX,
@@ -60,7 +55,12 @@ function draw() {
         },
         size:{
             w:values.size
-        }
+        },
+        clip:{
+            top:values.angleTop,
+            bottom:values.angleBottom
+        },
+        offset:values.offset
 
     })
 
