@@ -7,9 +7,11 @@ class prism {
     build(cellParams){
         this.cell = new cell(cellParams)
         this.cell.createGraphic()
-        this.cell.createCell()
+        this.cell.createCell()   
+    }
 
-        
+    setCount(newCount){
+        this.count = Math.abs(newCount)
     }
 
     drawPrism({
@@ -35,12 +37,8 @@ class prism {
             this.cell.drawCell(cellParams)
 
             cellParams.position.y += this.cell.size.h + (gap*this.cell.size.h)
-            
-            cellParams.offset += 0.1 * timeOffset
-  
-            if(cellParams.offset > 1 || cellParams.offset < -1){
-                cellParams.offset = 0
-            }
+
+            cellParams.offset += timeOffset
         }
     }
 }

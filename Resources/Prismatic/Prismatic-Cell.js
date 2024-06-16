@@ -52,9 +52,9 @@ class cell{
     
     positionCellGraphic(offset = 0.5){
       
-      offset = (offset%11)
+      offset = (offset%10) / 10
   
-      let graphicX = 0
+      let graphicX
       
       if(offset<=0){
         graphicX = lerp(-this.image.height, this.gap, Math.abs(offset))

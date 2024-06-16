@@ -33,7 +33,7 @@ function setup() {
   let gui = new dat.GUI()
   let cellControls = gui.addFolder("Cell")
   cellControls.add(values, "offset", -1, 1)
-  cellControls.add(values, "speed", -1, 1)
+  cellControls.add(values, "speed", -4, 4)
   cellControls.add(values, "posX", -windowWidth, windowWidth)
   cellControls.add(values, "posY", 0, windowHeight)
   cellControls.add(values, "size", 10, windowWidth)
@@ -89,9 +89,5 @@ function draw() {
     })
   
   values.offset += 0.1 * values.speed
-  
-  if(values.offset > 1 || values.offset < -1){
-    values.offset = 0
-  }
 
 }
