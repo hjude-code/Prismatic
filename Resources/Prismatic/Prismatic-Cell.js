@@ -1,10 +1,8 @@
 class cell{
     constructor({
-      image,
-      gapPercent = 0
+      image
     } = {}){
       this.image = image
-      this.gapPercent = gapPercent
       this.gap
       this.GraphicRowHeight
       this.aspectRatio
@@ -18,16 +16,18 @@ class cell{
     
     createGraphic(){
       this.graphic = createGraphics(0,0)
+      this.graphic.pixelDensity(1)
       this.graphic.resizeCanvas(this.image.width, this.image.height*2)
+
       
-      this.setGap(this.gapPercent)
+      this.setGap(0)
       
       this.graphic.image(this.image, 0, 0)
       this.graphic.image(this.image, 0, this.graphicRowHeight)
     }
     
     setGap(gapPercent){
-      this.gap = this.image.height*gapPercent
+      this.gap = Math.floor(this.image.height*gapPercent)
       this.graphicRowHeight = this.image.height + this.gap
     }
     
@@ -41,6 +41,7 @@ class cell{
   
     createCell(){
       this.cell = createGraphics(this.image.width, this.image.height)
+      this.cell.pixelDensity(1)
       this.cell.image(this.graphic, 0, 0)
 
       this.aspectRatio = this.image.height/this.image.width
@@ -71,13 +72,13 @@ class cell{
     setSize(width, height){
       
       if(width && height){
-        this.size.w = width
-        this.size.h = height
+        this.size.w = Math.floor(width)
+        this.size.h = Math.floor(height)
       }
 
       if(width && !height){
-        this.size.w = width
-        this.size.h = this.size.w*this.aspectRatio
+        this.size.w = Math.floor(width)
+        this.size.h = Math.floor(this.size.w*this.aspectRatio)
       }
     }
 
@@ -153,13 +154,16 @@ class cell{
         this.setClipMask(clip.top, clip.bottom)
       }
 
-      if(gap){
         this.updateGraphic(gap)
-      }
 
       this.positionCellGraphic(offset)
 
-      image(this.cell, position.x, position.y, this.size.w, this.size.h)
+      image(  
+        this.cell, 
+        Math.floor(position.x), 
+        Math.floor(position.y), 
+        this.size.w, 
+        this.size.h)
     }
   }
   

@@ -11,7 +11,8 @@ let values = {
   size:window.innerWidth/2,
   angleTop:0,
   angleBottom:0,
-  timeOffset:0
+  timeOffset:0,
+  count:2
 }
 
 function preload(){
@@ -20,6 +21,7 @@ function preload(){
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight)
+  pixelDensity(1)
   
   testCell = new cell({
     image:randomImage
@@ -37,12 +39,13 @@ function setup() {
   cellControls.add(values, "posX", -windowWidth, windowWidth)
   cellControls.add(values, "posY", 0, windowHeight)
   cellControls.add(values, "size", 10, windowWidth)
-  cellControls.add(values, "gap", 0, 1).onChange(()=>{testCell.updateGraphic(values.gap)})
-  cellControls.add(values, "angleTop", -45, 45).onChange(()=>{testCell.updateGraphic(values.gap)})
-  cellControls.add(values, "angleBottom", -45, 45).onChange(()=>{testCell.updateGraphic(values.gap)})
+  cellControls.add(values, "gap", 0, 1)
+  cellControls.add(values, "angleTop", -45, 45)
+  cellControls.add(values, "angleBottom", -45, 45)
 
   let prismControls = gui.addFolder("Prism")
   prismControls.add(values, "timeOffset", -2, 2)
+  prismControls.add(values, "count", 1, 10).onChange(()=>{testPrism.setCount(values.count)})
  
   testCell.createGraphic()
   testCell.createCell()
@@ -59,21 +62,22 @@ function windowResized() {
 function draw() {
   clear()
   
-//   testCell.drawCell({
-//         position:{
-//             x:values.posX,
-//             y:values.posY
-//         },
-//         size:{
-//             w:values.size
-//         },
-//         clip:{
-//             top:values.angleTop,
-//             bottom:values.angleBottom
-//         },
-//         offset:values.offset
+  // testCell.drawCell({
+  //       position:{
+  //           x:values.posX,
+  //           y:values.posY
+  //       },
+  //       size:{
+  //           w:values.size
+  //       },
+  //       clip:{
+  //           top:values.angleTop,
+  //           bottom:values.angleBottom
+  //       },
+  //       offset:values.offset,
+  //       gap:values.gap
 
-//     })
+  //   })
 
     testPrism.drawPrism({
         position:{
