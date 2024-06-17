@@ -87,7 +87,12 @@ function draw() {
         size:{
             w:values.size
         },
+        clip:{
+          top:values.angleTop,
+          bottom:values.angleBottom
+        },
         offset:values.offset,
+        speedOffset:values.speedOffset,
         gap:values.gap,
         timeOffset:values.timeOffset
     })

@@ -19,7 +19,8 @@ class prism {
         size={w:100},
         offset,
         gap,
-        timeOffset=0
+        timeOffset=0,
+        clip
     }={}){
 
         timeOffset = lerp(-1, 1, timeOffset)
@@ -28,7 +29,8 @@ class prism {
             position:position,
             size:size,
             offset:offset,
-            gap:gap
+            gap:gap,
+            clip:clip
         }
 
         for(let i = 0; i < this.count; i++){
